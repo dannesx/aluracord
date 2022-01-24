@@ -17,22 +17,36 @@ function Title(props) {
 	)
 }
 
+function Background() {
+	return (
+		<>
+			<video autoPlay muted loop>
+				<source src={require('../public/matrix.mp4')} type="video/mp4" />
+			</video>
+			<style jsx>{`
+				video {
+					position: absolute;
+					z-index: -100;
+					width: 100vw;
+					height: 100vh;
+          object-fit: cover;
+				}
+			`}</style>
+		</>
+	)
+}
+
 export default function HomePage() {
 	const username = 'dannesx'
 
 	return (
 		<>
+			<Background />
 			<Box
 				styleSheet={{
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
-					backgroundColor: appConfig.theme.colors.primary[500],
-					backgroundImage:
-						'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
-					backgroundRepeat: 'no-repeat',
-					backgroundSize: 'cover',
-					backgroundBlendMode: 'multiply',
 				}}
 			>
 				<Box
