@@ -21,7 +21,7 @@ function Background() {
 	return (
 		<>
 			<video autoPlay muted loop>
-				<source src={require('../public/matrix.mp4')} type="video/mp4" />
+				<source src="/matrix.mp4" type="video/mp4" />
 			</video>
 			<style jsx>{`
 				video {
@@ -29,7 +29,7 @@ function Background() {
 					z-index: -100;
 					width: 100vw;
 					height: 100vh;
-          object-fit: cover;
+					object-fit: cover;
 				}
 			`}</style>
 		</>
