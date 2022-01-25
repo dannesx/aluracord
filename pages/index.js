@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import appConfig from '../config.json'
 import { Box, Button, Text, TextField, Image } from '@skynexui/components'
 
@@ -37,7 +39,17 @@ function Background() {
 }
 
 export default function HomePage() {
-	const username = 'dannesx'
+	const [hasChars, setHasChars] = useState(false)
+	const [username, setUsername] = useState('dannesx')
+	const router = useRouter()
+
+	const handleUsername = value => {
+		setUsername(value)
+	}
+
+	useEffect(() => {
+		username.length > 2 ? setHasChars(true) : setHasChars(false)
+	}, [username])
 
 	return (
 		<>
@@ -70,6 +82,10 @@ export default function HomePage() {
 					{/* Formulário */}
 					<Box
 						as="form"
+						onSubmit={e => {
+							e.preventDefault()
+							router.push('/chat')
+						}}
 						styleSheet={{
 							display: 'flex',
 							flexDirection: 'column',
@@ -92,6 +108,7 @@ export default function HomePage() {
 						</Text>
 
 						<TextField
+							onChange={e => handleUsername(e.target.value)}
 							fullWidth
 							textFieldColors={{
 								neutral: {
@@ -137,8 +154,12 @@ export default function HomePage() {
 								borderRadius: '50%',
 								marginBottom: '16px',
 							}}
-							src={`https://github.com/${username}.png`}
-							alt={username}
+							src={
+								hasChars
+									? `https://github.com/${username}.png`
+									: 'https://cdn-icons.flaticon.com/png/512/4494/premium/4494749.png?token=exp=1643134325~hmac=4b20c71e3068ef9307791a8f41dacadd'
+							}
+							alt={hasChars && username}
 						/>
 						<Text
 							variant="body4"
