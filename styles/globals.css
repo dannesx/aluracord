@@ -24,3 +24,12 @@ body,
 	flex: 1;
 }
 /* ./App fit Height */
+
+::-webkit-scrollbar {
+	width: 8px;
+	background: none;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #181f25;
+}

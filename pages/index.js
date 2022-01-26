@@ -157,7 +157,7 @@ export default function HomePage() {
 							src={
 								hasChars
 									? `https://github.com/${username}.png`
-									: 'https://cdn-icons.flaticon.com/png/512/4494/premium/4494749.png?token=exp=1643134325~hmac=4b20c71e3068ef9307791a8f41dacadd'
+									: '/github-placeholder.png'
 							}
 							alt={hasChars && username}
 						/>
