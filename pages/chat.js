@@ -2,6 +2,7 @@ import { Box, Text, TextField, Image, Button } from '@skynexui/components'
 import React from 'react'
 import appConfig from '../config.json'
 import { createClient } from '@supabase/supabase-js'
+import { useRouter } from 'next/router'
 
 const SUPABASE_ANON_KEY =
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMwMDc2NSwiZXhwIjoxOTU4ODc2NzY1fQ.ZYRuQ-5AhbFA5jmJZgg68tbawiEfN6zDZDG8ZErdkjA'
@@ -31,6 +32,9 @@ export default function ChatPage() {
 	const [message, setMessage] = React.useState('')
 	const [messageList, setMessageList] = React.useState([])
 
+	const router = useRouter()
+	const { username } = router.query
+
 	React.useEffect(() => {
 		supabaseClient
 			.from('messages')
@@ -43,7 +47,7 @@ export default function ChatPage() {
 
 	const handleNewMessage = newMessage => {
 		const message = {
-			from: 'dannesx',
+			from: username,
 			text: newMessage,
 		}
 
@@ -202,7 +206,7 @@ function MessageList(props) {
 									display: 'inline-block',
 								}}
 								src={`https://github.com/${message.from}.png`}
-								alt="dannesx"
+								alt={message.from}
 							/>
 						</Box>
 						<Box

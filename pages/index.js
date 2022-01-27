@@ -84,7 +84,7 @@ export default function HomePage() {
 						as="form"
 						onSubmit={e => {
 							e.preventDefault()
-							router.push('/chat')
+							router.push(`/chat?username=${username}`)
 						}}
 						styleSheet={{
 							display: 'flex',
@@ -159,7 +159,7 @@ export default function HomePage() {
 									? `https://github.com/${username}.png`
 									: '/github-placeholder.png'
 							}
-							alt={hasChars && username}
+							alt={username}
 						/>
 						<Text
 							variant="body4"
