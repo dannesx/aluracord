@@ -40,7 +40,7 @@ function Background() {
 
 export default function HomePage() {
 	const [hasChars, setHasChars] = useState(false)
-	const [username, setUsername] = useState('dannesx')
+	const [username, setUsername] = useState('')
 	const router = useRouter()
 
 	const handleUsername = value => {
@@ -160,6 +160,10 @@ export default function HomePage() {
 									: '/github-placeholder.png'
 							}
 							alt={username}
+							onError={e => {
+								e.target.onerror = null
+								e.target.src = '/github-placeholder.png'
+							}}
 						/>
 						<Text
 							variant="body4"

@@ -207,6 +207,10 @@ function MessageList(props) {
 								}}
 								src={`https://github.com/${message.from}.png`}
 								alt={message.from}
+								onError={e => {
+									e.target.onerror = null
+									e.target.src = '/github-placeholder.png'
+								}}
 							/>
 						</Box>
 						<Box
