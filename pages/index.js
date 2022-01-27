@@ -39,17 +39,12 @@ function Background() {
 }
 
 export default function HomePage() {
-	const [hasChars, setHasChars] = useState(false)
 	const [username, setUsername] = useState('')
 	const router = useRouter()
 
 	const handleUsername = value => {
 		setUsername(value)
 	}
-
-	useEffect(() => {
-		username.length > 2 ? setHasChars(true) : setHasChars(false)
-	}, [username])
 
 	return (
 		<>
@@ -66,12 +61,8 @@ export default function HomePage() {
 						display: 'flex',
 						alignItems: 'center',
 						justifyContent: 'space-between',
-						flexDirection: {
-							xs: 'column',
-							sm: 'row',
-						},
 						width: '100%',
-						maxWidth: '700px',
+						maxWidth: '500px',
 						borderRadius: '5px',
 						padding: '32px',
 						margin: '16px',
@@ -91,7 +82,7 @@ export default function HomePage() {
 							flexDirection: 'column',
 							alignItems: 'center',
 							justifyContent: 'center',
-							width: { xs: '100%', sm: '50%' },
+							width: '100%',
 							textAlign: 'center',
 							marginBottom: '32px',
 						}}
@@ -110,6 +101,7 @@ export default function HomePage() {
 						<TextField
 							onChange={e => handleUsername(e.target.value)}
 							fullWidth
+							placeholder='Usuário do Github'
 							textFieldColors={{
 								neutral: {
 									textColor: appConfig.theme.colors.neutrals[200],
@@ -132,52 +124,6 @@ export default function HomePage() {
 						/>
 					</Box>
 					{/* Formulário */}
-
-					{/* Photo Area */}
-					<Box
-						styleSheet={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							maxWidth: '200px',
-							padding: '16px',
-							backgroundColor: appConfig.theme.colors.neutrals[800],
-							border: '1px solid',
-							borderColor: appConfig.theme.colors.neutrals[999],
-							borderRadius: '10px',
-							flex: 1,
-							minHeight: '240px',
-						}}
-					>
-						<Image
-							styleSheet={{
-								borderRadius: '50%',
-								marginBottom: '16px',
-							}}
-							src={
-								hasChars
-									? `https://github.com/${username}.png`
-									: '/github-placeholder.png'
-							}
-							alt={username}
-							onError={e => {
-								e.target.onerror = null
-								e.target.src = '/github-placeholder.png'
-							}}
-						/>
-						<Text
-							variant="body4"
-							styleSheet={{
-								color: appConfig.theme.colors.neutrals[200],
-								backgroundColor: appConfig.theme.colors.neutrals[900],
-								padding: '3px 10px',
-								borderRadius: '1000px',
-							}}
-						>
-							{username}
-						</Text>
-					</Box>
-					{/* Photo Area */}
 				</Box>
 			</Box>
 		</>

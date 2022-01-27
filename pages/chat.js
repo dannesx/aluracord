@@ -84,7 +84,7 @@ export default function ChatPage() {
 						padding: '32px',
 					}}
 				>
-					<Header />
+					<Header username={username} />
 					<Box
 						styleSheet={{
 							position: 'relative',
@@ -145,7 +145,7 @@ export default function ChatPage() {
 	)
 }
 
-function Header() {
+function Header({ username }) {
 	return (
 		<>
 			<Box
@@ -158,6 +158,37 @@ function Header() {
 				}}
 			>
 				<Text variant="heading5">Chat</Text>
+				<Box
+					styleSheet={{
+						display: 'flex',
+						alignItems: 'center',
+						gap: '10px',
+					}}
+				>
+					<Image
+						styleSheet={{
+							width: '48px',
+							borderRadius: '50%',
+							display: 'inline-block',
+						}}
+						src={`https://github.com/${username}.png`}
+						alt={username}
+						onError={e => {
+							e.target.onerror = null
+							e.target.src = '/github-placeholder.png'
+						}}
+					/>
+					<Box
+						styleSheet={{
+							display: 'flex',
+							flexDirection: 'column',
+							gap: '4px',
+						}}
+					>
+						<Text variant="body4">Logado como</Text>
+						<Text variant="heading5">{username}</Text>
+					</Box>
+				</Box>
 				<Button
 					variant="tertiary"
 					colorVariant="neutral"
