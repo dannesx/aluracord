@@ -240,6 +240,7 @@ function MessageList(props) {
 			}}
 		>
 			{props.messages.map(message => {
+				const time = Date.parse(message.created_at)
 				return (
 					<Text
 						key={message.id}
@@ -286,7 +287,8 @@ function MessageList(props) {
 									}}
 									tag="span"
 								>
-									{message.created_at.replace('T', ' | ').slice(0, -3)}
+									{new Date(time).toLocaleTimeString('pt-BR').slice(0, -3)} |{' '}
+									{new Date(time).toLocaleDateString('pt-BR')}
 								</Text>
 							</Box>
 							{message.text.startsWith(':sticker:') ? (
