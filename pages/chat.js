@@ -3,11 +3,21 @@ import React from 'react'
 import appConfig from '../config.json'
 import { createClient } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker'
 
 const SUPABASE_ANON_KEY =
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMwMDc2NSwiZXhwIjoxOTU4ODc2NzY1fQ.ZYRuQ-5AhbFA5jmJZgg68tbawiEfN6zDZDG8ZErdkjA'
 const SUPABASE_URL = 'https://swrgltikzdaonnahdrpl.supabase.co'
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+function listenRealTimeMessages(addMessage) {
+	return supabaseClient
+		.from('messages')
+		.on('INSERT', liveResponse => {
+			addMessage(liveResponse.new)
+		})
+		.subscribe()
+}
 
 function Background() {
 	return (
@@ -43,6 +53,12 @@ export default function ChatPage() {
 			.then(({ data }) => {
 				setMessageList(data)
 			})
+
+		listenRealTimeMessages(newMessage => {
+			setMessageList(currentList => {
+				return [newMessage, ...currentList]
+			})
+		})
 	}, [])
 
 	const handleNewMessage = newMessage => {
@@ -55,7 +71,7 @@ export default function ChatPage() {
 			.from('messages')
 			.insert([message])
 			.then(({ data }) => {
-				setMessageList([data[0], ...messageList])
+				console.log('Criando mensagem: ', data)
 			})
 
 		setMessage('')
@@ -127,7 +143,17 @@ export default function ChatPage() {
 									color: appConfig.theme.colors.neutrals[200],
 								}}
 							/>
+							<ButtonSendSticker
+								onStickerClick={sticker => {
+									handleNewMessage(`:sticker:${sticker}`)
+								}}
+							/>
 							<Button
+								styleSheet={{
+									minHeight: '50px',
+									minWidth: '50px',
+									marginLeft: '8px',
+								}}
 								onClick={e => handleNewMessage(message)}
 								iconName="arrowRight"
 								buttonColors={{
@@ -263,7 +289,15 @@ function MessageList(props) {
 									{message.created_at.replace('T', ' | ').slice(0, -3)}
 								</Text>
 							</Box>
-							{message.text}
+							{message.text.startsWith(':sticker:') ? (
+								<Image
+									styleSheet={{ maxWidth: '400px', width: '100%' }}
+									src={message.text.replace(':sticker:', '')}
+									alt="sticker"
+								/>
+							) : (
+								message.text
+							)}
 						</Box>
 					</Text>
 				)
